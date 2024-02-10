@@ -7,5 +7,5 @@ import (
 )
 
 func Log(details *entity.LogDetails, severity string, resourceLabels *map[string]string) {
-	fmt.Sprintf("s", details.Message) 
+	fmt.Sprintf("%s", details.Message)
 }

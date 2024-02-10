@@ -12,6 +12,11 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
+var (
+	dbpool *pgxpool.Pool
+	err    error
+)
+
 type (
 	Output             interface{}
 	Database[T Output] struct{}
@@ -22,7 +27,7 @@ func New[T Output]() *Database[T] {
 }
 
 func Connect(ctx context.Context) *pgxpool.Pool {
-	dbpool, err := pgxpool.New(ctx, appinstance.Data.Config.DBString)
+	dbpool, err = pgxpool.New(ctx, appinstance.Data.Config.DBString)
 	if err != nil {
 		panic(err)
 	}

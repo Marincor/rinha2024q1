@@ -60,7 +60,7 @@ generate_public:
 
 # Run migrations
 migrate: .venv
-	. .venv/bin/activate; migrate $(command) --driver pgsql
+	. .venv/bin/activate; migrate execute --driver pgsql
 
 # Create new migration file in project
 create_migration: .venv
