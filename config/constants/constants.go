@@ -10,19 +10,11 @@ import (
 )
 
 const (
-	Port                      = "9090"
-	LogDataKey                = "payload"
-	LogSeverityKey            = "log_severity"
-	MainLoggerName            = "health"
-	MainServiceName           = MainLoggerName + "_api"
-	MaxResquestLimit          = 2
-	AccessTokenExpirationTime = 15
-	SignedURLExp              = 60
-	Audience                  = "https://iam.services.marincor.com"
-	DefaultLimit              = 10
-	DefaultOffset             = 0
-	DefaultOTPGenerator       = "iam"
-	DefaultContextTimeout     = 100 * time.Millisecond
+	Port                  = "9090"
+	LogDataKey            = "payload"
+	LogSeverityKey        = "log_severity"
+	MaxResquestLimit      = 2
+	DefaultContextTimeout = 100 * time.Millisecond
 )
 
 const (
@@ -33,20 +25,14 @@ const (
 )
 
 var (
-	Debug, _     = strconv.ParseBool(os.Getenv("DEBUG"))
-	GcpProjectID = os.Getenv("PROJECT")
-	SecretPrefix = os.Getenv("SEC_PREFIX")
-	Environment  = os.Getenv("ENVIRONMENT")
-	Prefork      = strings.ToLower(os.Getenv("PREFORK")) != "false"
+	Debug, _ = strconv.ParseBool(os.Getenv("DEBUG"))
+	Prefork  = strings.ToLower(os.Getenv("PREFORK")) != "false"
 )
 
 var (
-	AllowedContentTypes   = []string{fiber.MIMEApplicationJSON}
-	AllowedHeaders        = "X-Session-Id, Authorization, Content-Type, Accept, Origin"
-	AllowedMethods        = "GET,POST,OPTIONS"
-	AllowedOrigins        = "https://tbd, https://tbd"
-	AllowedStageOrigins   = "https://localhost:3000, http://localhost:3000"
-	AllowedUnthrottledIPs = []string{"127.0.0.1"}
+	AllowedContentTypes = []string{fiber.MIMEApplicationJSON}
+	AllowedHeaders      = "X-Session-Id, Authorization, Content-Type, Accept, Origin"
+	AllowedMethods      = "GET,POST,OPTIONS"
 )
 
 const (
