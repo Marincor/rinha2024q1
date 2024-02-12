@@ -66,30 +66,15 @@ migrate: .venv
 create_migration: .venv
 	. .venv/bin/activate; migrate create --driver pgsql --migration_name $(name)
 
-# Lint application
-lint:
-  ifndef file
-	$(error file is not defined)
-  else
-	golangci-lint run $(file) --go=1.20 --enable-all --disable tagliatelle,wsl,godox,lll,gochecknoglobals,exhaustruct,exhaustivestruct,wrapcheck,depguard
-  endif
+run-docker-dev:
+	docker-compose up -d --build
+	docker-compose logs -f
 
-# Test application
-test: .env.test
-	. .venv/bin/activate; DATABASE_MIGRATION_URL=$(TEST_DATABASE_MIGRATION_URL) migrate execute --driver pgsql
-	go clean -testcache;
-	ENVIRONMENT=test INNOVATION_CREDENTIALS=$(CURDIR)/innovation.json go test -tags=unit -short -timeout 30s -v $(file)
+run-docker-prod:
+	docker compose up -d
 
-# format go files to avoid gofumpt linting errors
-format:
-  ifndef file
-	$(error file is not defined)
-  else
-	gofumpt -w $(file)
-  endif
+down:
+	docker compose down
 
-.PHONY: help
-help:
-	@echo "List of Makefile commands"
-	@echo ""
-	@awk '/^#/{c=substr($$0,3);next}c&&/^[[:alpha:]][[:alnum:]_-]+:/{print substr($$1,1,index($$1,":")),c}1{c=0}' $(MAKEFILE_LIST) | column -s: -t
+load-test:
+	./load-test.sh
