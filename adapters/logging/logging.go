@@ -1,11 +1,13 @@
 package logging
 
 import (
-	"fmt"
+	"log"
 
 	"api.default.marincor.com/entity"
 )
 
 func Log(details *entity.LogDetails, severity string, resourceLabels *map[string]string) {
-	fmt.Sprintf("%s", details.Message)
+	log.Println(details)
+	log.Println(severity)
+	log.Println(resourceLabels)
 }

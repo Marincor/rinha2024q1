@@ -33,22 +33,11 @@ const (
 )
 
 var (
-	Debug, _         = strconv.ParseBool(os.Getenv("DEBUG"))
-	GcpProjectID     = os.Getenv("PROJECT")
-	SecretPrefix     = os.Getenv("SEC_PREFIX")
-	UseTLS           = strings.ToLower(os.Getenv("USE_TLS")) == "true"
-	Environment      = os.Getenv("ENVIRONMENT")
-	Prefork          = strings.ToLower(os.Getenv("PREFORK")) != "false"
-	UseSecretManager = strings.ToLower(os.Getenv("USE_SECRETMANAGER")) != "false"
-	UseIAM           = strings.ToLower(os.Getenv("USE_IAM")) == "" || strings.ToLower(os.Getenv("USE_IAM")) == "true"
-)
-
-var (
-	EmailProvider = "mailgun"
-	SMSProvider   = ""
-
-	ChannelEmail = "email"
-	ChannelSMS   = "sms"
+	Debug, _     = strconv.ParseBool(os.Getenv("DEBUG"))
+	GcpProjectID = os.Getenv("PROJECT")
+	SecretPrefix = os.Getenv("SEC_PREFIX")
+	Environment  = os.Getenv("ENVIRONMENT")
+	Prefork      = strings.ToLower(os.Getenv("PREFORK")) != "false"
 )
 
 var (
@@ -74,3 +63,18 @@ const (
 	SeverityCritical  LoggingSeverity = "critical"
 	SeverityEmergency LoggingSeverity = "emergency"
 )
+
+const (
+	MaxLengthDescricao = 10
+)
+
+type TipoTransacao string
+
+const (
+	Credito TipoTransacao = "c"
+	Debito  TipoTransacao = "d"
+)
+
+func (*TipoTransacao) IsValid(tipo TipoTransacao) bool {
+	return tipo == Credito || tipo == Debito
+}

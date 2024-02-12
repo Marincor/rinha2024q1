@@ -8,6 +8,7 @@ import (
 	"api.default.marincor.com/app/appinstance"
 	"api.default.marincor.com/config/constants"
 	"api.default.marincor.com/entity"
+	"api.default.marincor.com/handler/clientes"
 	"api.default.marincor.com/handler/health"
 	"api.default.marincor.com/middleware"
 	"api.default.marincor.com/pkg/app"
@@ -41,7 +42,7 @@ func route() *fiber.App {
 		Level: compress.LevelBestCompression,
 	}))
 
-	apiGroup := appinstance.Data.Server.Group("/api")
+	apiGroup := appinstance.Data.Server.Group("")
 	apiGroup.Use(limiter.New(limiter.Config{
 		Next: func(c *fiber.Ctx) bool {
 			return helpers.Contains(constants.AllowedUnthrottledIPs, c.IP())
@@ -63,6 +64,10 @@ func route() *fiber.App {
 	}))
 
 	apiGroup.Get("/health", health.Handle().Check, app.Log)
+
+	clienteHandler := clientes.Handle()
+	clientesGroup := apiGroup.Group("clientes")
+	clientesGroup.Post("/:id/transacoes", clienteHandler.Create, app.Log)
 
 	// secureRoutes := apiGroup.Group("", middleware.Authorize())
 	// v1Group := secureRoutes.Group("/v1")

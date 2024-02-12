@@ -15,6 +15,8 @@ const (
 	HTTPStatusNotAcceptable       = http.StatusNotAcceptable
 	HTTPStatusTooManyRequests     = http.StatusTooManyRequests
 	HTTPStatusInternalServerError = http.StatusInternalServerError
+	HTTPStatusUnprocessableEntity = http.StatusUnprocessableEntity
+	HTTPStatusNotFound            = http.StatusNotFound
 )
 
 var HTTPStatusesOk = []string{
