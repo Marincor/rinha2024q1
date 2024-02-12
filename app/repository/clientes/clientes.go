@@ -23,3 +23,15 @@ func (repo *Repository) GetClienteByID(clienteID int64) (*entity.ClienteSaldo, e
 func (repo *Repository) UpdateClienteSaldo(clienteID int64, saldo int64) (*entity.ClienteSaldo, error) {
 	return database.Query("UPDATE clientes SET saldo = $1 WHERE id = $2 RETURNING saldo, limite", new(entity.ClienteSaldo), saldo, clienteID)
 }
+
+func (repo *Repository) GetLastTransacoes(clienteID int64) (*[]entity.UltimasTransacoes, error) {
+	output := []entity.UltimasTransacoes{}
+
+	response, err := database.Query("SELECT valor, tipo, descricao, realizada_em FROM transacoes WHERE id_cliente = $1 ORDER BY realizada_em DESC LIMIT 10", &output, clienteID)
+
+	return response, err
+}
+
+func (repo *Repository) GetSaldoByID(clienteID int64) (*entity.Saldo, error) {
+	return database.Query("SELECT id, saldo as total, limite, CURRENT_TIMESTAMP as data_extrato FROM clientes WHERE id = $1", new(entity.Saldo), clienteID)
+}

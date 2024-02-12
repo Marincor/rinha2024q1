@@ -106,3 +106,70 @@ func (handler *Handler) Create(ctx *fiber.Ctx) error {
 
 	return ctx.Next()
 }
+
+func (handler *Handler) Balance(ctx *fiber.Ctx) error {
+	var params entity.PathParams
+
+	if err := ctx.ParamsParser(&params); err != nil {
+		ctx.Locals(constants.LogDataKey, &entity.LogDetails{
+			Message:    "error to get cliente id in balance",
+			Reason:     err.Error(),
+			StatusCode: constants.HTTPStatusInternalServerError,
+		})
+		ctx.Locals(constants.LogSeverityKey, constants.SeverityError)
+
+		helpers.CreateResponse(ctx, &entity.ErrorResponse{
+			Message:     "error to get cliente id in balance",
+			Description: err.Error(),
+			StatusCode:  constants.HTTPStatusInternalServerError,
+		}, constants.HTTPStatusBadRequest)
+
+		return ctx.Next()
+	}
+
+	if statusCode, err := handler.validator.ValidateGetBalance(params.ID); err != nil {
+		ctx.Locals(constants.LogDataKey, &entity.LogDetails{
+			Message:    "error to get balance",
+			Reason:     err.Error(),
+			StatusCode: statusCode,
+		})
+		ctx.Locals(constants.LogSeverityKey, constants.SeverityError)
+
+		helpers.CreateResponse(ctx, &entity.ErrorResponse{
+			Message:     "error to get balance",
+			Description: err.Error(),
+			StatusCode:  statusCode,
+		}, statusCode)
+
+		return ctx.Next()
+	}
+
+	response, statusCode, err := handler.usecase.GetBalance(params.ID)
+	if err != nil {
+		ctx.Locals(constants.LogDataKey, &entity.LogDetails{
+			Message:    "error to get balance",
+			Reason:     err.Error(),
+			StatusCode: statusCode,
+		})
+		ctx.Locals(constants.LogSeverityKey, constants.SeverityError)
+
+		helpers.CreateResponse(ctx, &entity.ErrorResponse{
+			Message:     "error to get balance",
+			Description: err.Error(),
+			StatusCode:  statusCode,
+		}, statusCode)
+
+		return ctx.Next()
+	}
+
+	ctx.Locals(constants.LogDataKey, &entity.LogDetails{
+		Message:    "balance successfully retrieved",
+		StatusCode: constants.HTTPStatusOK,
+		Response:   response,
+	})
+	ctx.Locals(constants.LogSeverityKey, constants.SeverityInfo)
+
+	helpers.CreateResponse(ctx, response, constants.HTTPStatusOK)
+
+	return ctx.Next()
+}

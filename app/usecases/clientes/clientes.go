@@ -54,3 +54,28 @@ func (usecase *Usecase) CreateTransaction(clienteID int64, transacao entity.Tran
 
 	return clienteSaldo, constants.HTTPStatusOK, nil
 }
+
+func (usecase *Usecase) GetBalance(clienteID int64) (*entity.Extrato, int, error) {
+	var extrato entity.Extrato
+
+	cliente, err := usecase.repo.GetSaldoByID(clienteID)
+	if err != nil {
+		return nil, constants.HTTPStatusInternalServerError, err
+	}
+
+	if cliente.ID == nil || *cliente.ID == 0 {
+		return nil, constants.HTTPStatusNotFound, constantserrors.ErrClienteNotExist
+	}
+
+	ultimasTransacoes, err := usecase.repo.GetLastTransacoes(clienteID)
+	if err != nil {
+		return nil, constants.HTTPStatusInternalServerError, err
+	}
+
+	extrato.Saldo = *cliente
+	extrato.UltimasTransacoes = *ultimasTransacoes
+
+	extrato.Saldo.ID = nil
+
+	return &extrato, constants.HTTPStatusOK, nil
+}

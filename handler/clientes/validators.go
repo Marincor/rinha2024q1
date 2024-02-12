@@ -49,3 +49,11 @@ func (v *Validator) ValidateCreateTransaction(clienteID int64, transacao *entity
 
 	return constants.HTTPStatusOK, nil
 }
+
+func (v *Validator) ValidateGetBalance(clienteID int64) (int, error) {
+	if clienteID == 0 {
+		return constants.HTTPStatusBadRequest, constantserrors.ErrClienteIDMissing
+	}
+
+	return constants.HTTPStatusOK, nil
+}

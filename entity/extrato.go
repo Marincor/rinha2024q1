@@ -3,6 +3,7 @@ package entity
 import "time"
 
 type Saldo struct {
+	ID          *int64    `json:"id,omitempty"`
 	Total       int64     `json:"total"`
 	DataExtrato time.Time `json:"data_extrato"`
 	Limite      int64     `json:"limite"`

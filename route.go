@@ -68,6 +68,7 @@ func route() *fiber.App {
 	clienteHandler := clientes.Handle()
 	clientesGroup := apiGroup.Group("clientes")
 	clientesGroup.Post("/:id/transacoes", clienteHandler.Create, app.Log)
+	clientesGroup.Get("/:id/extrato", clienteHandler.Balance, app.Log)
 
 	// secureRoutes := apiGroup.Group("", middleware.Authorize())
 	// v1Group := secureRoutes.Group("/v1")
