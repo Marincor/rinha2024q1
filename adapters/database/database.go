@@ -3,7 +3,9 @@ package database
 import (
 	"context"
 	"errors"
+	"fmt"
 	"log"
+	"os"
 	"reflect"
 
 	"api.default.marincor.com/app/appinstance"
@@ -27,7 +29,13 @@ func New[T Output]() *Database[T] {
 }
 
 func Connect(ctx context.Context) *pgxpool.Pool {
-	dbpool, err = pgxpool.New(ctx, appinstance.Data.Config.DBString)
+	// Postgres
+	config, err := pgxpool.ParseConfig(fmt.Sprintf("user=admin password=123 host=%s port=5432 dbname=rinha sslmode=disable pool_max_conns=%s", os.Getenv("DB_HOST"), os.Getenv("DB_POOL")))
+	if err != nil {
+		panic(err)
+	}
+
+	dbpool, err = pgxpool.New(ctx, config.ConnString())
 	if err != nil {
 		panic(err)
 	}

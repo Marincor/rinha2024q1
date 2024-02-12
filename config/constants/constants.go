@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	Port                  = "9090"
+	Port                  = "3000"
 	LogDataKey            = "payload"
 	LogSeverityKey        = "log_severity"
 	MaxResquestLimit      = 2
@@ -25,8 +25,9 @@ const (
 )
 
 var (
-	Debug, _ = strconv.ParseBool(os.Getenv("DEBUG"))
-	Prefork  = strings.ToLower(os.Getenv("PREFORK")) != "false"
+	Environment = strings.ToLower(os.Getenv("ENVIRONMENT"))
+	Debug, _    = strconv.ParseBool(os.Getenv("DEBUG"))
+	Prefork     = strings.ToLower(os.Getenv("PREFORK")) != "false"
 )
 
 var (

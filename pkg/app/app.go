@@ -27,11 +27,11 @@ func ApplicationInit() {
 	appinstance.Data = &appinstance.Application{
 		Config: configs,
 		Server: fiber.New(fiber.Config{
-			ServerHeader: "Death Star",
+			ServerHeader: "Rinha",
 			ErrorHandler: customErrorHandler,
 			JSONEncoder:  json.Marshal,
 			JSONDecoder:  json.Unmarshal,
-			Prefork:      constants.Prefork,
+			Prefork:      false,
 		}),
 	}
 

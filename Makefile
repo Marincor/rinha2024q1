@@ -66,6 +66,9 @@ migrate: .venv
 create_migration: .venv
 	. .venv/bin/activate; migrate create --driver pgsql --migration_name $(name)
 
+update-docker-image:
+	docker build -t=ghrc.io/marincor/rinha2024q1:latest .
+
 run-docker-dev:
 	docker-compose up -d --build
 	docker-compose logs -f
