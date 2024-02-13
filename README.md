@@ -1,7 +1,6 @@
 # Rinha Backend 2° edição - 2024/Q1 - Controle de Concorrência
 
-img (to change)
-
+![image](https://github.com/Marincor/rinha2024q1/assets/84210050/0743be02-b511-4406-b44f-b1902419b635)
 
 ## 🔨 Feito em :
 
@@ -20,4 +19,4 @@ img (to change)
 ## 🔗 Links:
 
 - [Desafio](https://github.com/zanfranceschi/rinha-de-backend-2024-q1);
-- [Submissão]()
+- [Submissão](https://github.com/Marincor/rinha2024q1)
