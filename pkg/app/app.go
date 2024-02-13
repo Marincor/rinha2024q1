@@ -12,7 +12,6 @@ import (
 	"api.default.marincor.com/adapters/logging"
 	"api.default.marincor.com/app/appinstance"
 	constanterrors "api.default.marincor.com/app/errors"
-	"api.default.marincor.com/config"
 	"api.default.marincor.com/config/constants"
 	"api.default.marincor.com/entity"
 	"api.default.marincor.com/pkg/helpers"
@@ -21,11 +20,9 @@ import (
 )
 
 func ApplicationInit() {
-	configs := config.New()
 	ctx := context.Background()
 
 	appinstance.Data = &appinstance.Application{
-		Config: configs,
 		Server: fiber.New(fiber.Config{
 			ServerHeader: "Rinha",
 			ErrorHandler: customErrorHandler,

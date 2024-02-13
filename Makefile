@@ -23,8 +23,6 @@ setup: go.mod
 # Run local server
 export DB_POOL=60
 run:
-	HOST=teste
-	
 	go run .
 
 # Run migrations

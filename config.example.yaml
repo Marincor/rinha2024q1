@@ -1,2 +1,0 @@
-dbString: postgres://user:password@host:port/dbname
-dbLogMode: 3
