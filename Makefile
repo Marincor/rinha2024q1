@@ -79,5 +79,5 @@ run-docker-prod:
 down:
 	docker compose down
 
-load-test:
+test:
 	./load-test.sh

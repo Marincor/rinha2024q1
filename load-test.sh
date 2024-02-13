@@ -1,5 +1,4 @@
 
-# TODO: CHECK
 RESULTS_WORKSPACE="$(pwd)/load-test/user-files/results"
 GATLING_BIN_DIR=$HOME/gatling/bin
 GATLING_WORKSPACE="$(pwd)/load-test/user-files"
