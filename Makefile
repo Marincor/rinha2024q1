@@ -2,37 +2,11 @@ SHELL=/bin/bash
 .DEFAULT_GOAL=setup
 CURRENTDIR=$(shell dirname `pwd`)
 
-ifneq (,$(wildcard ./.env))
-include .env
-export
-endif
-
-ifneq (,$(wildcard ./.env.test))
-include .env.test
-export
-endif
-
 # Setup application
 setup: go.mod
-	@echo "`tput bold`#### Verifying configuration files and server certificates ####`tput sgr0`"
-	@test -f cert.pem || go run /usr/local/go/src/crypto/tls/generate_cert.go --host localhost
-	@test -f .env || cp .env.example .env
-	@test -f config.yaml || cp config.example.yaml config.yaml
-	@make generate_key
-	@echo "## Configuration files are now ready to use ##"
-
-	@sleep 2
-
 	@echo "`tput bold`#### Installing dependencies to your project ####`tput sgr0`"
 	go mod tidy
 
-	go get -u golang.org/x/lint/golint
-	go install golang.org/x/lint/golint
-	go get -u github.com/mgechev/revive@latest
-	go install github.com/mgechev/revive@latest
-
-	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.52.2
-	go install mvdan.cc/gofumpt@latest
 	@sleep 2
 
 	@echo "creating .venv and installing it's dependencies"
@@ -47,16 +21,11 @@ setup: go.mod
 	@echo ""
 
 # Run local server
-run: .env
-	TEST_DATABASE="" go run .
-
-# Generate private.pem file to encrypt in transit data
-generate_key:
-	test -f private.pem || openssl genpkey -out private.pem -algorithm RSA -pkeyopt rsa_keygen_bits:4096
-
-# Generate public key from private.pem
-generate_public:
-	test -f private.pem && openssl pkey -in private.pem -pubout -out public.pem
+export DB_POOL=60
+run:
+	HOST=teste
+	
+	go run .
 
 # Run migrations
 migrate: .venv
@@ -74,10 +43,10 @@ run-docker-dev:
 	docker-compose logs -f
 
 run-docker-prod:
-	docker compose up -d
+	docker-compose up -d
 
 down:
-	docker compose down
+	docker-compose down
 
 test:
 	./load-test.sh
