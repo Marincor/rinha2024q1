@@ -2,7 +2,7 @@ version: '3'
 
 services:
   api01: &api
-    image: ghrc.io/marincor/rinha2024q1:latest
+    image: ghcr.io/marincor/rinha2024q1:latest
     environment:
       DB_HOST: 'db'
       DB_POOL: '60'
