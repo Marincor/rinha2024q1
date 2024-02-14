@@ -47,4 +47,5 @@ down:
 	docker-compose down
 
 test:
+	@test -e ./load-test/user-files/results && rm -rf ./load-test/user-files/results || true
 	./load-test.sh
