@@ -4,7 +4,7 @@ GATLING_BIN_DIR=$HOME/gatling/bin
 GATLING_WORKSPACE="$(pwd)/load-test/user-files"
 
 runGatling() {
-    sh $GATLING_BIN_DIR/gatling.sh -rm local -s RinhaBackendCrebitosSimulation \
+   sh $GATLING_BIN_DIR/gatling.sh -rm local -s RinhaBackendCrebitosSimulation \
         -rd "Rinha de Backend - 2024/Q1: Crébito" \
         -rf $RESULTS_WORKSPACE \
         -sf "$GATLING_WORKSPACE/simulations"
@@ -21,5 +21,6 @@ startTest() {
         break || sleep 2;
     done
 }
+
 
 startTest

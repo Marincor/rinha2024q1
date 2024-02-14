@@ -34,3 +34,4 @@ innovation.json
 *.identifier
 *.Identifier
 __debug*
+load-test/user-files/results
