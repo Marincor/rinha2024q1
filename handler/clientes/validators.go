@@ -36,15 +36,15 @@ func (v *Validator) ValidateCreateTransaction(clienteID int64, transacao *entity
 	}
 
 	if transacao.Descrição == "" {
-		return constants.HTTPStatusBadRequest, constantserrors.ErrDescricaoMissing
+		return constants.HTTPStatusUnprocessableEntity, constantserrors.ErrDescricaoMissing
 	}
 
 	if len(transacao.Descrição) > constants.MaxLengthDescricao {
-		return constants.HTTPStatusBadRequest, constantserrors.ErrDescricaoTooLarge
+		return constants.HTTPStatusUnprocessableEntity, constantserrors.ErrDescricaoTooLarge
 	}
 
 	if !v.tiposValidos.IsValid(constants.TipoTransacao(transacao.Tipo)) {
-		return constants.HTTPStatusBadRequest, constantserrors.ErrInvalidTransacaoTipo
+		return constants.HTTPStatusUnprocessableEntity, constantserrors.ErrInvalidTransacaoTipo
 	}
 
 	return constants.HTTPStatusOK, nil
@@ -52,7 +52,7 @@ func (v *Validator) ValidateCreateTransaction(clienteID int64, transacao *entity
 
 func (v *Validator) ValidateGetBalance(clienteID int64) (int, error) {
 	if clienteID == 0 {
-		return constants.HTTPStatusBadRequest, constantserrors.ErrClienteIDMissing
+		return constants.HTTPStatusNotFound, constantserrors.ErrClienteIDMissing
 	}
 
 	return constants.HTTPStatusOK, nil

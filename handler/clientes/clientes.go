@@ -30,14 +30,14 @@ func (handler *Handler) Create(ctx *fiber.Ctx) error {
 		ctx.Locals(constants.LogDataKey, &entity.LogDetails{
 			Message:    "error to get cliente id in transaction",
 			Reason:     err.Error(),
-			StatusCode: constants.HTTPStatusInternalServerError,
+			StatusCode: constants.HTTPStatusUnprocessableEntity,
 		})
 		ctx.Locals(constants.LogSeverityKey, constants.SeverityError)
 
 		helpers.CreateResponse(ctx, &entity.ErrorResponse{
 			Message:     "error to get cliente id in transaction",
 			Description: err.Error(),
-			StatusCode:  constants.HTTPStatusInternalServerError,
+			StatusCode:  constants.HTTPStatusUnprocessableEntity,
 		}, constants.HTTPStatusBadRequest)
 
 		return ctx.Next()
@@ -47,14 +47,14 @@ func (handler *Handler) Create(ctx *fiber.Ctx) error {
 		ctx.Locals(constants.LogDataKey, &entity.LogDetails{
 			Message:    "error to get body in transaction",
 			Reason:     err.Error(),
-			StatusCode: constants.HTTPStatusInternalServerError,
+			StatusCode: constants.HTTPStatusUnprocessableEntity,
 		})
 		ctx.Locals(constants.LogSeverityKey, constants.SeverityError)
 
 		helpers.CreateResponse(ctx, &entity.ErrorResponse{
 			Message:     "error to get body in transaction",
 			Description: err.Error(),
-			StatusCode:  constants.HTTPStatusInternalServerError,
+			StatusCode:  constants.HTTPStatusUnprocessableEntity,
 		}, constants.HTTPStatusBadRequest)
 
 		return ctx.Next()
@@ -114,14 +114,14 @@ func (handler *Handler) Balance(ctx *fiber.Ctx) error {
 		ctx.Locals(constants.LogDataKey, &entity.LogDetails{
 			Message:    "error to get cliente id in balance",
 			Reason:     err.Error(),
-			StatusCode: constants.HTTPStatusInternalServerError,
+			StatusCode: constants.HTTPStatusUnprocessableEntity,
 		})
 		ctx.Locals(constants.LogSeverityKey, constants.SeverityError)
 
 		helpers.CreateResponse(ctx, &entity.ErrorResponse{
 			Message:     "error to get cliente id in balance",
 			Description: err.Error(),
-			StatusCode:  constants.HTTPStatusInternalServerError,
+			StatusCode:  constants.HTTPStatusUnprocessableEntity,
 		}, constants.HTTPStatusBadRequest)
 
 		return ctx.Next()
