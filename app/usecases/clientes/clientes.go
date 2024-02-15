@@ -1,8 +1,6 @@
 package clientes
 
 import (
-	"math"
-
 	constantserrors "api.default.marincor.com/app/errors"
 	"api.default.marincor.com/app/repository/clientes"
 	"api.default.marincor.com/config/constants"
@@ -24,7 +22,7 @@ func (usecase *Usecase) CreateTransaction(clienteID int64, transacao entity.Tran
 
 	cliente, err := usecase.repo.GetClienteByID(clienteID)
 	if err != nil {
-		return nil, constants.HTTPStatusInternalServerError, err
+		return nil, constants.HTTPStatusUnprocessableEntity, err
 	}
 
 	if cliente.ID == 0 {
@@ -32,11 +30,6 @@ func (usecase *Usecase) CreateTransaction(clienteID int64, transacao entity.Tran
 	}
 
 	if transacao.Tipo == string(constants.Debito) {
-		saldoToLimit := int64(math.Abs(float64(cliente.Saldo - transacao.Valor)))
-		if saldoToLimit > cliente.Limite {
-			return nil, constants.HTTPStatusUnprocessableEntity, constantserrors.ErrInvalidTransacaoValor
-		}
-
 		saldoAfterTransaction = cliente.Saldo - transacao.Valor
 	} else {
 		saldoAfterTransaction = cliente.Saldo + transacao.Valor
@@ -44,12 +37,12 @@ func (usecase *Usecase) CreateTransaction(clienteID int64, transacao entity.Tran
 
 	err = usecase.repo.CreateTransaction(clienteID, transacao)
 	if err != nil {
-		return nil, constants.HTTPStatusInternalServerError, err
+		return nil, constants.HTTPStatusUnprocessableEntity, err
 	}
 
 	clienteSaldo, err := usecase.repo.UpdateClienteSaldo(clienteID, saldoAfterTransaction)
 	if err != nil {
-		return nil, constants.HTTPStatusInternalServerError, err
+		return nil, constants.HTTPStatusUnprocessableEntity, err
 	}
 
 	return clienteSaldo, constants.HTTPStatusOK, nil
