@@ -35,12 +35,12 @@ func (usecase *Usecase) CreateTransaction(clienteID int64, transacao entity.Tran
 		saldoAfterTransaction = cliente.Saldo + transacao.Valor
 	}
 
-	err = usecase.repo.CreateTransaction(clienteID, transacao)
+	clienteSaldo, err := usecase.repo.UpdateClienteSaldo(clienteID, saldoAfterTransaction)
 	if err != nil {
 		return nil, constants.HTTPStatusUnprocessableEntity, err
 	}
 
-	clienteSaldo, err := usecase.repo.UpdateClienteSaldo(clienteID, saldoAfterTransaction)
+	err = usecase.repo.CreateTransaction(clienteID, transacao)
 	if err != nil {
 		return nil, constants.HTTPStatusUnprocessableEntity, err
 	}
