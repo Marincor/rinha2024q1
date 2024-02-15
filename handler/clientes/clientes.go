@@ -38,7 +38,7 @@ func (handler *Handler) Create(ctx *fiber.Ctx) error {
 			Message:     "error to get cliente id in transaction",
 			Description: err.Error(),
 			StatusCode:  constants.HTTPStatusUnprocessableEntity,
-		}, constants.HTTPStatusBadRequest)
+		}, constants.HTTPStatusUnprocessableEntity)
 
 		return ctx.Next()
 	}
@@ -55,7 +55,7 @@ func (handler *Handler) Create(ctx *fiber.Ctx) error {
 			Message:     "error to get body in transaction",
 			Description: err.Error(),
 			StatusCode:  constants.HTTPStatusUnprocessableEntity,
-		}, constants.HTTPStatusBadRequest)
+		}, constants.HTTPStatusUnprocessableEntity)
 
 		return ctx.Next()
 	}
