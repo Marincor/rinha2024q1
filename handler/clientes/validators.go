@@ -19,7 +19,7 @@ func NewValidator() *Validator {
 }
 
 func (v *Validator) ValidateCreateTransaction(clienteID int64, transacao *entity.TransacaoRequest) (int, error) {
-	if clienteID == 0 {
+	if clienteID == 0 || clienteID > 5 {
 		return constants.HTTPStatusNotFound, constantserrors.ErrClienteIDMissing
 	}
 
@@ -47,7 +47,7 @@ func (v *Validator) ValidateCreateTransaction(clienteID int64, transacao *entity
 }
 
 func (v *Validator) ValidateGetBalance(clienteID int64) (int, error) {
-	if clienteID == 0 {
+	if clienteID == 0 || clienteID > 5 {
 		return constants.HTTPStatusNotFound, constantserrors.ErrClienteIDMissing
 	}
 
